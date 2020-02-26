@@ -1,10 +1,12 @@
 extern crate serde;
 
 mod mata_info;
+mod runtime;
 mod type_checker;
 
 use std::fs::File;
 use std::io::Read;
+// use std::sync::mpsc;
 
 use serde_json;
 //use serde_lexpr;
@@ -12,12 +14,13 @@ use serde_json;
 use mata_info::ast;
 use mata_info::ast::Expr;
 use mata_info::ast::Literal::Bool;
+use std::cell::RefCell;
+use std::mem::size_of;
 //use mata_info::{node, node::Node};
 
 fn main() {
     println!("Hello, world!");
 }
-
 
 #[test]
 fn write_expr() {
@@ -25,12 +28,11 @@ fn write_expr() {
     println!("write out: {}", serde_json::to_string(&expr).unwrap());
     let expr = Expr::Literal(Bool(true));
     println!("write out: {}", serde_json::to_string(&expr).unwrap());
-    let expr =
-        Expr::IfThenElse(
-            Box::new(Expr::Unknown),
-            Box::new(Expr::Unknown),
-            Box::new(Expr::Unknown)
-        );
+    let expr = Expr::IfThenElse(
+        Box::new(Expr::Unknown),
+        Box::new(Expr::Unknown),
+        Box::new(Expr::Unknown),
+    );
     println!("write out: {}", serde_json::to_string(&expr).unwrap());
     let expr = //Expr::Literal(Bool(true));
         Expr::IfElseIf(
