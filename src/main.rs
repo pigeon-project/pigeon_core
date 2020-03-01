@@ -28,17 +28,17 @@ fn write_expr() {
     println!("write out: {}", serde_json::to_string(&expr).unwrap());
     let expr = Expr::Literal(Bool(true));
     println!("write out: {}", serde_json::to_string(&expr).unwrap());
-    let expr = Expr::IfThenElse(
-        Box::new(Expr::Unknown),
-        Box::new(Expr::Unknown),
-        Box::new(Expr::Unknown),
-    );
+    // let expr = Expr::IfThenElse(
+    //     Box::new(Expr::Unknown),
+    //     Box::new(Expr::Unknown),
+    //     Box::new(Expr::Unknown),
+    // );
     println!("write out: {}", serde_json::to_string(&expr).unwrap());
-    let expr = //Expr::Literal(Bool(true));
-        Expr::IfElseIf(
-            vec![(Expr::Unknown, Expr::Unknown)],
-            Box::new(Expr::Unknown)
-        );
+    // let expr = //Expr::Literal(Bool(true));
+    //     Expr::IfElseIf(
+    //         vec![(Expr::Unknown, Expr::Unknown)],
+    //         Box::new(Expr::Unknown)
+    //     );
     println!("write out: {}", serde_json::to_string(&expr).unwrap());
 }
 
