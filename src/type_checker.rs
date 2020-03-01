@@ -48,7 +48,7 @@ fn expr_infer(context: &Context, expr: Expr, path: Path) -> CompileResult<TypeEx
         Expr::Unknown => Ok(TypeExpr::BaseType(BaseType::Bottom)),
         Expr::Literal(x) => Ok(literal_infer(x)),
         Expr::Variable(name) => match (context.1).0.borrow().get(&name) {
-            Some(x) => unifier(),
+            Some(x) => unimplemented!(),
             None => Err(CompileError(path, ErrorInfo::from(TYPE_ASSERT_ERR))),
         },
         Expr::TypeAssert(e, t) => {
