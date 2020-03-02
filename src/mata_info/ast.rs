@@ -1,6 +1,9 @@
+use serde::export::fmt::Error;
+use serde::export::Formatter;
 use serde::{Deserialize, Serialize};
 use std::cell::RefCell;
 use std::collections::HashMap;
+use std::path::Display;
 
 pub type Id = u64;
 pub type Level = u64;
@@ -17,7 +20,7 @@ pub type RErrorMessage = &'static str;
 pub type RErrorInfo = (RErrorCode, RErrorMessage);
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct ErrorInfo(String, String);
+pub struct ErrorInfo(pub String, pub String);
 
 impl From<RErrorInfo> for ErrorInfo {
     fn from(input: RErrorInfo) -> Self {
@@ -28,7 +31,7 @@ impl From<RErrorInfo> for ErrorInfo {
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CompileError(pub Path, pub ErrorInfo);
 
-pub type CompileResult<T> = Result<T, CompileError>;
+pub type CompileResult<T> = Result<T, Vec<CompileError>>;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
 pub enum BaseType {
@@ -41,6 +44,23 @@ pub enum BaseType {
     F32,
     F64,
     PString,
+}
+
+impl ToString for BaseType {
+    fn to_string(&self) -> String {
+        match self {
+            BaseType::Bottom => "pigeon.bottom",
+            BaseType::Unit => "pigeon.unit",
+            BaseType::Bool => "pigeon.bool",
+            BaseType::Char => "pigeon.char",
+            BaseType::I64 => "pigeon.i64",
+            BaseType::U64 => "pigeon.u64",
+            BaseType::F32 => "pigeon.f32",
+            BaseType::F64 => "pigeon.f64",
+            BaseType::PString => "pigeon.str",
+        }
+        .to_string()
+    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
